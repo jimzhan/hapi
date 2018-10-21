@@ -1,1 +1,3 @@
-export { default as urls } from './urls'
+import * as views from './views'
+
+export { views }
