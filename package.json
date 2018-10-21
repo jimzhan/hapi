@@ -1,0 +1,21 @@
+{
+  "private": true,
+  "name": "hapi",
+  "version": "0.1.0",
+  "description": "Seed for hapi.js + MongoDB",
+  "repository": "https://github.com/jimzhan/hapi",
+  "author": "Jim Zhan <jim.zhan@me.com>",
+  "license": "MIT",
+  "scripts": {
+    "lint": "esnext lint",
+    "start": "esnext start index.js",
+    "test": "esnext test"
+  },
+  "dependencies": {
+    "config": "^2.0.1",
+    "cross-env": "^5.2.0",
+    "esnext-scripts": "^0.30.1",
+    "glue": "^5.0.0",
+    "hapi": "^17.6.0"
+  }
+}
