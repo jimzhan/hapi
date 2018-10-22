@@ -16,6 +16,8 @@
     "cross-env": "^5.2.0",
     "esnext-scripts": "^0.30.1",
     "glue": "^5.0.0",
-    "hapi": "^17.6.0"
+    "hapi": "^17.6.0",
+    "immutable": "^3.8.2",
+    "mongoose": "^5.3.5"
   }
 }

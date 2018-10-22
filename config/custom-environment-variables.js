@@ -1,4 +1,7 @@
 module.exports = {
   host: 'HOST',
-  port: 'PORT'
+  port: 'PORT',
+  db: {
+    uri: 'DB_URI'
+  }
 }
