@@ -1,5 +1,5 @@
 import Glue from 'glue'
-import manifest from './manifest'
+import manifest from './config/manifest'
 
 const start = async () => {
   try {

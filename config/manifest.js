@@ -1,4 +1,5 @@
 import config from 'config'
+import plugins from '../plugins'
 
 export default {
   server: {
@@ -20,10 +21,6 @@ export default {
     }
   },
   register: {
-    plugins: [
-      {
-        plugin: './plugins/routes'
-      }
-    ]
+    plugins
   }
 }
