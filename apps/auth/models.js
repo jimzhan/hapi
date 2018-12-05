@@ -63,8 +63,7 @@ RoleSchema.methods.can = async function (action, resource, attributes = ['*']) {
   this.populate('permissions')
   // convert `Array based permissions to `Map` based.
   const permissions = this.permissions.reduce(
-    // @FIXME - mistakenly overwrite existing resource's actions.
-    (result, item) => ({ ...result, [item.resource]: { [item.action]: item.attributes } }),
+    (result, v) => lodash.merge(result, { [v.role]: { [v.resource]: { [v.action]: [v.attributes] } } }),
     {}
   )
   // Match detailed action type with corresponding `accesscontrol` function.
