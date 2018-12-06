@@ -3,17 +3,20 @@ import Confidence from 'confidence'
 
 const internals = {
   criteria: {
-    env: process.env.NODE_ENV
+    mode: process.env.NODE_ENV,
+    deployment: process.env.DEPLOYMENT
   }
 }
 
 internals.settings = {
   $meta: 'application settings file',
+  host: '127.0.0.1',
   port: {
-    $filter: 'env',
-    production: 8000,
+    $filter: 'mode',
+    production: 9394,
     $default: 5000
-  }
+  },
+  secret: process.env.SECRET
 }
 
 internals.store = new Confidence.Store(internals.settings)
