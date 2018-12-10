@@ -1,10 +1,9 @@
-import config from 'config'
-import plugins from '../plugins'
+import settings from '../settings'
 
 export default {
   server: {
-    host: config.get('host'),
-    port: config.get('port'),
+    host: settings.host,
+    port: settings.port,
     router: {
       isCaseSensitive: false,
       stripTrailingSlash: true
@@ -21,6 +20,12 @@ export default {
     }
   },
   register: {
-    plugins
+    plugins: [{
+      plugin: require('yar'),
+      options: settings.yar
+    },
+    {
+      plugin: './plugins/routes'
+    }]
   }
 }
