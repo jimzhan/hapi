@@ -25,7 +25,7 @@ export default {
       options: settings.yar
     },
     {
-      plugin: './plugins/routes'
+      plugin: './server/routes.plugin'
     }]
   }
 }

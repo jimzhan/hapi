@@ -12,13 +12,13 @@ const internals = {
 internals.settings = {
   $meta: 'application settings file',
   basedir: path.join(__dirname, '..'),
+  secret: process.env.SECRET,
   host: '127.0.0.1',
   port: {
     $filter: 'mode',
     production: 9394,
     $default: 5000
   },
-  secret: process.env.SECRET,
   yar: {
     name: 'sid',
     storeBlank: false,
@@ -31,7 +31,11 @@ internals.settings = {
         production: true,
         $default: false
       },
-      isHttpOnly: true,
+      isHttpOnly: {
+        $filter: 'mode',
+        production: true,
+        $default: false
+      },
       ttl: null
     }
   }
