@@ -1,7 +1,7 @@
-import { auth } from '../apps'
+import { auth } from '../apis'
 
 const routes = [
-  { method: 'GET', path: '/login', handler: auth.views.login }
+  { method: 'GET', path: '/login', handler: auth.login }
 ]
 
 export const plugin = {

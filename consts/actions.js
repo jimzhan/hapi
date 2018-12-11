@@ -1,6 +1,6 @@
 import { Record } from 'immutable'
 
-export const actions = Record({
+export default Record({
   createAny: 'create:any',
   createOwn: 'create:own',
   readAny: 'read:any',
