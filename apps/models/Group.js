@@ -1,7 +1,7 @@
 import lodash from 'lodash'
 import mongoose from 'mongoose'
 import AccessControl from 'accesscontrol'
-import { actions } from './consts'
+import { actions } from '../consts'
 
 const { Schema } = mongoose
 

@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import { actions } from './consts'
+import { actions } from '../consts'
 
 const { Schema } = mongoose
 

@@ -1,4 +1,4 @@
-import { auth } from '../apis'
+import { auth } from '../apps/apis'
 
 const routes = [
   { method: 'GET', path: '/login', handler: auth.login }
