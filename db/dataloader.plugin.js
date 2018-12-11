@@ -1,8 +1,7 @@
 import DataLoader from 'dataloader'
 
-export default (Schema) => {
+const dataloader = (Schema) => {
   let dataloader
-
   Schema.statics.getDataLoader = function () {
     if (!dataloader) {
       dataloader = new DataLoader(
@@ -20,3 +19,5 @@ export default (Schema) => {
     return this.getDataLoader().loadMany(ids)
   }
 }
+
+export default dataloader

@@ -3,6 +3,7 @@ import * as db from '../../../db'
 
 describe('apps.apis.models.Permission', () => {
   beforeAll(() => {
+    jest.setTimeout(10000)
     db.connect()
   })
 
@@ -50,6 +51,7 @@ describe('apps.apis.models.Permission', () => {
       attributes: ['*']
     })
     const record = await models.Permission.load(permission.id)
+    expect(record).toBeTruthy()
     expect(record.id).toBe(permission.id)
   })
 

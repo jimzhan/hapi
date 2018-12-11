@@ -2,6 +2,7 @@ import lodash from 'lodash'
 import mongoose from 'mongoose'
 import AccessControl from 'accesscontrol'
 import { actions } from '../consts'
+import { plugins } from '../../db'
 
 const { Schema } = mongoose
 
@@ -28,28 +29,42 @@ const GroupSchema = new Schema({
 
 /**
  * ------------------------------------------------------------------------------------------
- * Shortcut to check whether current role can perform the given scoped action on the resource.
- * ------------------------------------------------------------------------------------------
- * @param {String} action - scoped action to perform on the resource. @SEE `consts.Actions`.
- * @param {String} resource - actual name of the resource to the given action.
- * @param {Array} attributes - resource's attributes to be limited.
+ * Setup `AccessControl` instance for the given group..
  * ------------------------------------------------------------------------------------------
  * @SEE {https://github.com/Automattic/mongoose/issues/5057} for N/A of arrow function.
  * @SEE {http://onury.github.io/accesscontrol/?api=ac} for finer control.
  */
-GroupSchema.methods.can = async function (action, resource, attributes = ['*']) {
-  this.populate('permissions')
+GroupSchema.methods.access = async function () {
+  if (!this.permissions) return null
+  await this.populate('permissions').execPopulate()
   // convert `Array based permissions to `Map` based.
-  const permissions = this.permissions.reduce(
-    (result, v) => lodash.merge(result, { [v.role]: { [v.resource]: { [v.action]: [v.attributes] } } }),
+  const mappings = this.permissions.reduce(
+    (result, v) => lodash.merge(result, { [v.role]: { [v.resource]: { [v.action]: v.attributes } } }),
     {}
   )
+  const gid = this.id
+  return new AccessControl({ [gid]: mappings }).can(gid)
+}
+
+/**
+ * ------------------------------------------------------------------------------------------
+ * Shortcut to check whether current role can perform the given scoped action on the resource.
+ * ------------------------------------------------------------------------------------------
+ * @param {String} action - scoped action to perform on the resource. @SEE `consts.Actions`.
+ * @param {String} resource - actual name of the resource to the given action.
+ * ------------------------------------------------------------------------------------------
+ * @SEE {https://github.com/Automattic/mongoose/issues/5057} for N/A of arrow function.
+ * @SEE {http://onury.github.io/accesscontrol/?api=ac} for finer control.
+ */
+GroupSchema.methods.can = async function (action, resource) {
   // Match detailed action type with corresponding `accesscontrol` function.
   const func = lodash.findKey(
     actions.toJS(), lodash.partial(lodash.isEqual, action)
   )
-  const acl = new AccessControl({ [this.name]: permissions }).can(this.name)
-  return (func in acl) ? acl[func](resource, attributes).granted : false
+  const acl = await this.access(action, resource)
+  return (func in acl) ? acl[func](resource).granted : false
 }
+
+GroupSchema.plugin(plugins.dataloader)
 
 export default mongoose.model('Group', GroupSchema)
