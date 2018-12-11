@@ -19,6 +19,9 @@ internals.settings = {
     production: 9394,
     $default: 5000
   },
+  db: {
+    uri: process.env.DB_URI
+  },
   yar: {
     name: 'sid',
     storeBlank: false,

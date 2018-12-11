@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
 import { actions } from '../consts'
+import { plugins } from '../../db'
 
 const { Schema } = mongoose
 
@@ -43,5 +44,7 @@ PermissionSchema.index({
 }, {
   unique: true
 })
+
+PermissionSchema.plugin(plugins.dataloader)
 
 export default mongoose.model('Permission', PermissionSchema)
