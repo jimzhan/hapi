@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt'
 import mongoose from 'mongoose'
+import { plugins } from '../../db'
 
 const { Schema } = mongoose
 
@@ -14,8 +15,8 @@ const { Schema } = mongoose
 const UserSchema = new Schema({
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  roles: [{
-    ref: 'Role',
+  groups: [{
+    ref: 'Group',
     required: true,
     type: Schema.Types.ObjectId
   }]
@@ -40,5 +41,7 @@ UserSchema.pre('save', function (next) {
     next()
   })
 })
+
+UserSchema.plugin(plugins.DataLoader)
 
 export default mongoose.model('User', UserSchema)

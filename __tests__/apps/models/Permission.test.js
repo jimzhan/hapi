@@ -1,5 +1,7 @@
-import { models } from '../../../apps'
+import { consts, models } from '../../../apps'
 import * as db from '../../../db'
+
+const { actions } = consts
 
 describe('apps.apis.models.Permission', () => {
   beforeAll(() => {
@@ -17,7 +19,7 @@ describe('apps.apis.models.Permission', () => {
 
   it('creates a new Permission', async () => {
     const permission = await models.Permission.create({
-      action: 'create:any',
+      action: actions.createAny,
       resource: 'test-example',
       attributes: ['*']
     })
@@ -28,14 +30,14 @@ describe('apps.apis.models.Permission', () => {
 
   it('failed to create a duplicated Permission record', async () => {
     const permission = await models.Permission.create({
-      action: 'create:any',
+      action: actions.createAny,
       resource: 'test-example',
       attributes: ['*']
     })
     expect(permission.id.length).toBe(24)
     try {
       await models.Permission.create({
-        action: 'create:any',
+        action: actions.createAny,
         resource: 'test-example',
         attributes: ['*']
       })
@@ -46,7 +48,7 @@ describe('apps.apis.models.Permission', () => {
 
   it('loads an existing Permission record via `loader`', async () => {
     const permission = await models.Permission.create({
-      action: 'create:any',
+      action: actions.createAny,
       resource: 'test-example',
       attributes: ['*']
     })
@@ -57,12 +59,12 @@ describe('apps.apis.models.Permission', () => {
 
   it('updates an existing Permission record', async () => {
     const permission = await models.Permission.create({
-      action: 'create:any',
+      action: actions.createAny,
       resource: 'test-example',
       attributes: ['*']
     })
     const record = await models.Permission.load(permission.id)
-    record.action = 'create:own'
+    record.action = actions.createOwn
     await record.save()
     expect(record.id).toBe(permission.id)
     expect(record.action).not.toBe(permission.action)
@@ -71,7 +73,7 @@ describe('apps.apis.models.Permission', () => {
 
   it('delete an existing Permission record', async () => {
     const { id } = await models.Permission.create({
-      action: 'create:any',
+      action: actions.createAny,
       resource: 'test-example',
       attributes: ['*']
     })

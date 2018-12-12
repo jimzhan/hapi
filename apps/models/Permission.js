@@ -45,6 +45,6 @@ PermissionSchema.index({
   unique: true
 })
 
-PermissionSchema.plugin(plugins.dataloader)
+PermissionSchema.plugin(plugins.DataLoader)
 
 export default mongoose.model('Permission', PermissionSchema)

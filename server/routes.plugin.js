@@ -1,11 +1,11 @@
-import { auth } from '../apps/apis'
+import { auth } from '../apps/views'
 
 const routes = [
-  { method: 'GET', path: '/login', handler: auth.login }
+  { method: 'POST', path: '/login', config: auth.login }
 ]
 
 export const plugin = {
-  name: 'routes',
+  name: 'routes.plugin',
   async register (server) {
     server.route(routes)
   }

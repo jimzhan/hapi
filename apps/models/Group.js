@@ -3,6 +3,7 @@ import mongoose from 'mongoose'
 import AccessControl from 'accesscontrol'
 import { actions } from '../consts'
 import { plugins } from '../../db'
+import { models } from '..'
 
 const { Schema } = mongoose
 
@@ -29,21 +30,33 @@ const GroupSchema = new Schema({
 
 /**
  * ------------------------------------------------------------------------------------------
- * Setup `AccessControl` instance for the given group..
+ * Setup `AccessControl` instance for the given group.
+ * ------------------------------------------------------------------------------------------
+ * @param {String} action - scoped action to perform on the resource. @SEE `consts.Actions`.
+ * @param {String} resource - actual name of the resource to the given action.
  * ------------------------------------------------------------------------------------------
  * @SEE {https://github.com/Automattic/mongoose/issues/5057} for N/A of arrow function.
  * @SEE {http://onury.github.io/accesscontrol/?api=ac} for finer control.
  */
-GroupSchema.methods.access = async function () {
+GroupSchema.methods.access = async function (action = null, resource = null) {
   if (!this.permissions) return null
-  await this.populate('permissions').execPopulate()
+  const permissions = await models.Permission.loadMany(this.permissions)
   // convert `Array based permissions to `Map` based.
-  const mappings = this.permissions.reduce(
-    (result, v) => lodash.merge(result, { [v.role]: { [v.resource]: { [v.action]: v.attributes } } }),
+  const mappings = permissions.reduce(
+    (result, v) => lodash.merge(result, { [v.resource]: { [v.action]: v.attributes } }),
     {}
   )
   const gid = this.id
-  return new AccessControl({ [gid]: mappings }).can(gid)
+  const access = new AccessControl({ [gid]: mappings }).can(gid)
+  if (action && resource) {
+    // Match detailed action type with corresponding `accesscontrol` function.
+    const func = lodash.findKey(
+      actions.toJS(),
+      lodash.partial(lodash.isEqual, action)
+    )
+    return (func in access) && access[func](resource)
+  }
+  return access
 }
 
 /**
@@ -57,14 +70,10 @@ GroupSchema.methods.access = async function () {
  * @SEE {http://onury.github.io/accesscontrol/?api=ac} for finer control.
  */
 GroupSchema.methods.can = async function (action, resource) {
-  // Match detailed action type with corresponding `accesscontrol` function.
-  const func = lodash.findKey(
-    actions.toJS(), lodash.partial(lodash.isEqual, action)
-  )
   const acl = await this.access(action, resource)
-  return (func in acl) ? acl[func](resource).granted : false
+  return acl && acl.granted
 }
 
-GroupSchema.plugin(plugins.dataloader)
+GroupSchema.plugin(plugins.DataLoader)
 
 export default mongoose.model('Group', GroupSchema)
