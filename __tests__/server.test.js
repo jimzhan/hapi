@@ -4,11 +4,11 @@ import settings from '../settings'
 describe('server', () => {
   let server
 
-  beforeAll(async () => {
+  beforeEach(async () => {
     server = await start()
   })
 
-  afterAll(async () => {
+  afterEach(async () => {
     await server.stop()
   })
 
