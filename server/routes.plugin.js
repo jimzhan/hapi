@@ -1,4 +1,4 @@
-import { routes } from '../apps/views'
+import { routes } from '../apps'
 
 export const plugin = {
   name: 'routes.plugin',
