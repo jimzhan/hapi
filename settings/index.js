@@ -1,6 +1,6 @@
 import path from 'path'
-import immutable from 'immutable'
-import Confidence from 'confidence'
+import { Record } from 'immutable'
+import { Store } from 'confidence'
 // ----------------------------------------------------------------------
 //  Environment based filters:
 //    - `process.env.NODE_ENV`
@@ -53,9 +53,6 @@ const internals = {
   }
 }
 
-internals.store = new Confidence.Store(internals.settings)
+internals.store = new Store(internals.settings)
 
-export default immutable.Record(internals.store.get('/', {
-  mode: process.env.NODE_ENV,
-  deployment: process.env.DEPLOYMENT
-}))()
+export default Record(internals.store.get('/', internals.criteria))()

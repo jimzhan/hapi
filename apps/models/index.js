@@ -1,8 +1,20 @@
+import path from 'path'
 import mongoose from 'mongoose'
+import globby from 'globby'
 import { plugins } from '../../db'
 
-mongoose.plugin(plugins.dataloader)
+const here = path.resolve(__dirname)
 
-export { default as Group } from './Group'
-export { default as Permission } from './Permission'
-export { default as User } from './User'
+mongoose.plugin(plugins.DataLoader)
+
+globby.sync([
+  // Available model schema.
+  `${here}/*.js`,
+  `!${here}/index.js`,
+  `!${here}/*.spec.js`,
+  `!${here}/*.test.js`
+]).forEach(abspath => {
+  const module = require(abspath)
+  const Model = (module.default || module)(mongoose)
+  exports[Model.modelName] = Model
+})
