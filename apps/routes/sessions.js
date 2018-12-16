@@ -8,7 +8,7 @@ export const create = {
   method: 'POST',
   path: '/login',
 
-  config: {
+  options: {
     auth: false,
 
     validate: {
@@ -32,7 +32,7 @@ export const remove = {
   method: 'POST',
   path: '/logout',
 
-  config: {
+  options: {
     auth: false,
 
     handler: async (request, h) => {

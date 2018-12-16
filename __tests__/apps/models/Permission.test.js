@@ -1,3 +1,4 @@
+import mongoose from 'mongoose'
 import { consts, models } from '../../../apps'
 import * as db from '../../../db'
 
@@ -80,5 +81,32 @@ describe('apps.apis.models.Permission', () => {
     await models.Permission.deleteOne({ _id: id })
     const record = await models.Permission.findById(id)
     expect(record).toBeFalsy()
+  })
+
+  it('upsert many permissions', async () => {
+    const permission = await models.Permission.create({
+      action: actions.createAny,
+      resource: 'test-x',
+      attributes: ['*']
+    })
+
+    const { insertedCount, modifiedCount } = await models.Permission.bulkWrite([
+      {
+        insertOne: {
+          document: Object.assign(permission.toObject(), {
+            _id: mongoose.Types.ObjectId(),
+            resource: 'test-b'
+          })
+        }
+      },
+      {
+        updateOne: {
+          filter: { _id: permission._id },
+          update: { resource: 'test-a' }
+        }
+      }
+    ])
+    expect(insertedCount).toBe(1)
+    expect(modifiedCount).toBe(1)
   })
 })
