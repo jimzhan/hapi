@@ -90,11 +90,12 @@ describe('apps.apis.models.Permission', () => {
       attributes: ['*']
     })
 
+    const newId = mongoose.Types.ObjectId()
     const { insertedCount, modifiedCount } = await models.Permission.bulkWrite([
       {
         insertOne: {
           document: Object.assign(permission.toObject(), {
-            _id: mongoose.Types.ObjectId(),
+            _id: newId,
             resource: 'test-b'
           })
         }
@@ -106,7 +107,11 @@ describe('apps.apis.models.Permission', () => {
         }
       }
     ])
+    const a = await models.Permission.findById(permission._id)
+    const b = await models.Permission.findById(newId)
     expect(insertedCount).toBe(1)
     expect(modifiedCount).toBe(1)
+    expect(a.resource).toBe('test-a')
+    expect(b.resource).toBe('test-b')
   })
 })
