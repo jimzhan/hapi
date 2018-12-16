@@ -25,7 +25,7 @@ export default {
       options: settings.yar
     },
     {
-      plugin: './server/routes.plugin'
+      plugin: './apps/auth'
     }]
   }
 }
