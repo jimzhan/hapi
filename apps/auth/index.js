@@ -1,5 +1,5 @@
-import joi from 'joi'
-import Boom from 'boom'
+import * as validators from './validators'
+
 // ----------------------------------------------------------------------
 //  RESTful style user login/logout on top of session cookie.
 // ----------------------------------------------------------------------
@@ -15,15 +15,8 @@ export const plugin = {
         options: {
           auth: false,
 
-          validate: {
-            payload: {
-              username: joi.string().min(6).email().required(),
-              password: joi.string().min(6).required()
-            },
-            failAction: () => {
-              throw Boom.badRequest()
-            }
-          },
+          validate: validators.login,
+
           handler: async (request, h) => {
             return h.response({ data: 'token' })
           },

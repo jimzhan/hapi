@@ -21,12 +21,6 @@ describe('server', () => {
       }
     })
     expect(response.statusCode).toBe(200)
-
-    response = await server.inject({
-      url: '/login',
-      method: 'POST'
-    })
-    expect(response.statusCode).toBe(400)
   })
 
   it('remove an existing user session', async () => {
