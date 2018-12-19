@@ -1,5 +1,21 @@
+import path from 'path'
+import globby from 'globby'
 import mongoose from 'mongoose'
 import settings from '../settings'
+import DataLoader from './dataloader.plugin'
+
+export const register = () => {
+  mongoose.plugin(DataLoader)
+
+  const apps = path.resolve(__dirname, '../apps')
+  globby.sync([
+    `${apps}/**/models.js`
+  ]).forEach(abspath => {
+    require(abspath)
+  })
+
+  return mongoose.models
+}
 
 export const connect = (options = {}) => {
   mongoose.connection.on('connected', () => {

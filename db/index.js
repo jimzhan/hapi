@@ -1,5 +1,5 @@
 import { ObjectId } from 'bson'
-import { connect, disconnect } from './connection'
+import { connect, disconnect, register } from './connection'
 import DataLoader from './DataLoader.plugin'
 
 export const Key = () => (new ObjectId()).toHexString()
@@ -9,5 +9,6 @@ export const plugins = {
 }
 export {
   connect,
-  disconnect
+  disconnect,
+  register
 }

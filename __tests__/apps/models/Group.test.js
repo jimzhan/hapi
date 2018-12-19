@@ -1,12 +1,14 @@
 import * as db from '../../../db'
-import { models } from '../../../apps'
 import * as consts from '../../../apps/auth/consts'
 
 const { actions } = consts
 
 describe('apps.apis.models.Group', () => {
+  let models
+
   beforeAll(() => {
     jest.setTimeout(10000)
+    models = db.register()
     db.connect()
   })
 
