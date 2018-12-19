@@ -4,14 +4,19 @@ import mongoose from 'mongoose'
 import AccessControl from 'accesscontrol'
 import { actions } from './consts'
 
-/**
- * ------------------------------------------------------------------------------------------
- * models of this `auth` module follows `RBAC` pricinple with following relationship:
- *  1) user has roles.
- *  2) role includes permissions.
- *  3) permission includes resource, actions and attributes of resource that can be performed.
- * ------------------------------------------------------------------------------------------
- */
+// ------------------------------------------------------------------------------------------
+// models of this `auth` module follows `RBAC` pricinple with following relationship:
+//  1) user has roles.
+//  2) role includes permissions.
+//  3) permission includes resource, actions and attributes of resource that can be performed.
+// ------------------------------------------------------------------------------------------
+// Intro.
+//  - `action` - the actions can be performed on an `object`. There are two action-attributes
+//                which define the possession of the resource: `own` and `any`.
+//  - `attributes` - `object`'s attributes for finer ACL, `[*]` by default.
+//  - `resource` - is the resource that you can perform CRUD on.
+// ------------------------------------------------------------------------------------------
+
 const { Schema } = mongoose
 
 const GroupSchema = new Schema({
