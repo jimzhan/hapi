@@ -1,4 +1,4 @@
-import { actions } from '../consts'
+import { actions } from '../auth/consts'
 // ------------------------------------------------------------------------------------------
 // models of this `auth` module follows `RBAC` pricinple with following relationship:
 //  1) user has roles.

@@ -1,6 +1,7 @@
 import mongoose from 'mongoose'
-import { consts, models } from '../../../apps'
 import * as db from '../../../db'
+import { models } from '../../../apps'
+import * as consts from '../../../apps/auth/consts'
 
 const { actions } = consts
 

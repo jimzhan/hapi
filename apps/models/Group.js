@@ -1,6 +1,6 @@
 import lodash from 'lodash'
 import AccessControl from 'accesscontrol'
-import { actions } from '../consts'
+import { actions } from '../auth/consts'
 
 /**
  * ------------------------------------------------------------------------------------------

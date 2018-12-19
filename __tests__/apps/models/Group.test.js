@@ -1,5 +1,6 @@
 import * as db from '../../../db'
-import { consts, models } from '../../../apps'
+import { models } from '../../../apps'
+import * as consts from '../../../apps/auth/consts'
 
 const { actions } = consts
 
