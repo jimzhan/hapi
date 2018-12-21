@@ -1,4 +1,4 @@
-import { start } from '../../../server'
+import { start } from '../../server'
 
 describe('server', () => {
   let server
@@ -9,6 +9,7 @@ describe('server', () => {
 
   afterEach(async () => {
     await server.stop()
+    server = null
   })
 
   it('create a new user session', async () => {

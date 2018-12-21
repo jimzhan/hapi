@@ -10,6 +10,7 @@ describe('server', () => {
 
   afterEach(async () => {
     await server.stop()
+    server = null
   })
 
   it('start an hapi server', async () => {
