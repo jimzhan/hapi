@@ -1,0 +1,15 @@
+{
+  "private": true,
+  "name": "happy",
+  "version": "0.1.0",
+  "description": "Production seed for hapi.js in TypeScript",
+  "repository": "https://github.com/jimzhan/happy",
+  "author": "Jim Zhan <jim.zhan@me.com>",
+  "license": "MIT",
+  "workspaces": [
+    "packages/*"
+  ],
+  "dependencies": {
+    "typescript": "^3.2.2"
+  }
+}

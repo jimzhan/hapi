@@ -1,0 +1,22 @@
+{
+  "name": "@happy/api",
+  "version": "0.1.0",
+  "scripts": {
+    "start": "ts-node src/index.ts"
+  },
+  "dependencies": {
+    "@types/confidence": "^1.4.30",
+    "@types/glue": "^5.0.4",
+    "@types/node": "^10.12.18",
+    "@types/yar": "^9.1.0",
+    "confidence": "^4.0.1",
+    "glue": "^5.0.0",
+    "hapi": "^17.8.1",
+    "immutable": "^4.0.0-rc.12",
+    "yar": "^9.1.0"
+  },
+  "devDependencies": {
+    "ts-node": "^7.0.1",
+    "tslib": "^1.9.3"
+  }
+}
