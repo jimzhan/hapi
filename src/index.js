@@ -1,6 +1,7 @@
 import { start } from './server'
 
-(async () => {
+// eslint-disable-next-line
+;(async () => {
   try {
     const server = await start()
     console.log('Server is listening on', server.info.uri)

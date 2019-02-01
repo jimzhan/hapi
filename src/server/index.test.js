@@ -1,28 +1,19 @@
-import { start } from '../server'
+import test from 'ava'
+import * as server from '../server'
 import settings from '../settings'
 
-describe('server', () => {
-  let server
+test('start an hapi server', async t => {
+  const instance = await server.start()
+  t.is(instance.info.port, settings.port)
+  await instance.stop()
+})
 
-  beforeEach(async () => {
-    server = await start()
+test('access a non-existent url', async t => {
+  const instance = await server.compose()
+  const response = await instance.inject({
+    url: '/notfound',
+    method: 'GET',
+    payload: { foo: 'bar' }
   })
-
-  afterEach(async () => {
-    await server.stop()
-    server = null
-  })
-
-  it('start an hapi server', async () => {
-    expect(server.info.port).toBe(settings.port)
-  })
-
-  it('access a non-existent url', async () => {
-    const response = await server.inject({
-      url: '/notfound',
-      method: 'GET',
-      payload: { foo: 'bar' }
-    })
-    expect(response.statusCode).toBe(404)
-  })
+  t.is(response.statusCode, 404)
 })

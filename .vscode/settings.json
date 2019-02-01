@@ -1,9 +1,13 @@
 {
+  "files.autoSave": "onFocusChange",
+  "editor.formatOnSave": false,
+  "[javascript]": {
+    "editor.formatOnSave": true
+  },
   "eslint.enable": true,
-  "eslint.alwaysShowStatus": false,
+  "eslint.alwaysShowStatus": true,
   "eslint.autoFixOnSave": true,
-  "eslint.packageManager": "yarn",
-  "eslint.workingDirectories": [
-    "./packages",
-  ]
+  "javascript.validate.enable": true,
+  "prettier.singleQuote": true,
+  "prettier.eslintIntegration": true
 }

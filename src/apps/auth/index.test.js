@@ -1,34 +1,24 @@
-import { start } from '../../server'
+import test from 'ava'
+import { compose } from '../../server'
 
-describe('server', () => {
-  let server
-
-  beforeEach(async () => {
-    server = await start()
+test('create a new user session', async t => {
+  const server = await compose()
+  let response = await server.inject({
+    url: '/login',
+    method: 'POST',
+    payload: {
+      username: 'sample@test.com',
+      password: 'abcxyz'
+    }
   })
+  t.is(response.statusCode, 200)
+})
 
-  afterEach(async () => {
-    await server.stop()
-    server = null
+test('remove an existing user session', async t => {
+  const server = await compose()
+  const response = await server.inject({
+    url: '/logout',
+    method: 'POST'
   })
-
-  it('create a new user session', async () => {
-    let response = await server.inject({
-      url: '/login',
-      method: 'POST',
-      payload: {
-        username: 'sample@test.com',
-        password: 'abcxyz'
-      }
-    })
-    expect(response.statusCode).toBe(200)
-  })
-
-  it('remove an existing user session', async () => {
-    const response = await server.inject({
-      url: '/logout',
-      method: 'POST'
-    })
-    expect(response.statusCode).toBe(200)
-  })
+  t.is(response.statusCode, 200)
 })
