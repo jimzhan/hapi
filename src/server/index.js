@@ -13,7 +13,9 @@ export const compose = async () => {
 export const start = async () => {
   const server = await compose()
   const manager = exiting.createManager(server)
-  await server.start()
+
   await manager.start()
+  await server.start()
+
   return server
 }

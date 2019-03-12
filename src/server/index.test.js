@@ -5,7 +5,6 @@ import settings from '../settings'
 test('start an hapi server', async t => {
   const instance = await server.start()
   t.is(instance.info.port, settings.port)
-  await instance.stop()
 })
 
 test('access a non-existent url', async t => {
