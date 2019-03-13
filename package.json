@@ -9,6 +9,7 @@
   "scripts": {
     "build": "npx rm -rf build && babel src --out-dir build",
     "lint": "eslint src --ext .js,jsx",
+    "format": "prettier-standard 'src/**/*.js'",
     "start": "nodemon --exec babel-node src/index.js",
     "test": "jest"
   },
@@ -50,7 +51,6 @@
     "jest": "^24.5.0",
     "lint-staged": "^8.1.0",
     "nodemon": "^1.18.9",
-    "prettier": "^1.16.3",
     "prettier-standard": "^9.1.1"
   }
 }

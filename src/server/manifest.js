@@ -20,12 +20,14 @@ export default {
     }
   },
   register: {
-    plugins: [{
-      plugin: require('yar'),
-      options: settings.yar
-    },
-    {
-      plugin: './apps/auth'
-    }]
+    plugins: [
+      {
+        plugin: require('yar'),
+        options: settings.yar
+      },
+      {
+        plugin: './apps/auth'
+      }
+    ]
   }
 }
