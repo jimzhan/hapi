@@ -1,6 +1,7 @@
-import test from 'ava'
-import settings from './index'
+import settings from '../settings'
 
-test('settings', t => {
-  t.is(typeof settings.port, 'number')
+describe('settings', () => {
+  it('settings', () => {
+    expect(typeof settings.port).toBe('number')
+  })
 })

@@ -1,8 +1,9 @@
-import test from 'ava'
-import * as db from './index'
+import * as db from '../db'
 
-test('db.Key()', async t => {
-  const key = db.Key()
-  t.is(key.length, 24)
-  t.true(typeof key === 'string')
+describe('db', () => {
+  it('db.key()', () => {
+    const key = db.Key()
+    expect(key.length).toBe(24)
+    expect(typeof key).toBe('string')
+  })
 })
