@@ -1,4 +1,3 @@
-import * as handlers from './handlers'
 import * as validators from './validators'
 
 // ----------------------------------------------------------------------
@@ -15,12 +14,13 @@ export const plugin = {
 
         options: {
           auth: false,
+          tags: ['api'],
 
           validate: validators.login,
 
-          handler: handlers.login,
-
-          tags: ['api']
+          handler: async (request, h) => {
+            return h.response({ data: 'token' })
+          }
         }
       },
       {
@@ -29,10 +29,11 @@ export const plugin = {
 
         options: {
           auth: false,
+          tags: ['api'],
 
-          handler: handlers.logout,
-
-          tags: ['api']
+          handler: async (request, h) => {
+            return h.response({ data: 'logout' })
+          }
         }
       }
     ])
