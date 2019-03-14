@@ -1,18 +1,9 @@
 FROM node:11.11.0-alpine
 
-RUN rm -rf CWD/node_modules
+ARG BASE
 
-ADD ./src CWD
-ADD ./logs CWD
-ADD ./data CWD
+RUN mkdir -p ${BASE}
+COPY . ${BASE}/
+WORKDIR ${BASE}
 
-ADD ./package.json CWD
-ADD ./package-lock.json CWD
-ADD ./tsconfig.json CWD
-
-WORKDIR CWD
-
-EXPOSE PORT
-
-RUN npm prune
-RUN npm install
+RUN npm install --no-optional

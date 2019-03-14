@@ -35,6 +35,11 @@ export const plugin = {
             return h.response({ data: 'logout' })
           }
         }
+      },
+      {
+        method: 'GET',
+        path: '/echo',
+        handler: async (request, h) => h.response({ data: 'echo' })
       }
     ])
   }

@@ -18,10 +18,10 @@ const internals = {
     $meta: 'application settings file',
     basedir: path.join(__dirname, '..'),
     secret: process.env.SECRET,
-    host: '127.0.0.1',
+    host: '0.0.0.0',
     port: {
       $filter: 'mode',
-      production: 9394,
+      production: process.env.PORT,
       $default: 5000
     },
     db: {
